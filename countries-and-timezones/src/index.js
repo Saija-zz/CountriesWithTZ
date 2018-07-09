@@ -4732,15 +4732,48 @@ function popo(){
 	console.log('countriesAndTimezones.getAllCountries() = ' + countriesAndTimezones.getAllCountries());
 	console.log('countriesAndTimezones.getAllCountries().length = ' + countriesAndTimezones.getAllCountries().length);
 	
+	//var zelect = document.createElement("select");
 	
-	var countries = countriesAndTimezones.getAllCountries();
+	var div = document.getElementById('dropdownsCountries');
+	
+	var htmlDyn = '';
 
-	console.log('countries = ' + countries.length);
+	htmlDyn = '<select id="countries" onChange="loadTZForCountry()">';
+	
+	allCountries = countriesAndTimezones.getAllCountries();
+	for(var prop2 in allCountries){
+		htmlDyn += '<option value="' + allCountries[prop2].id + '" onClick="loadTZForCountry()">' + allCountries[prop2].name + '</option>';
+	}
+	
+	htmlDyn += '</select>';
+	
+	div.innerHTML = htmlDyn;
+	
+	
+}
 
-	countries.forEach(function createOption(country){
-		console.log(country.id + ' -- ' + country.name);
-	});
-  }
+function loadTZForCountry(){
+	var selectedCountry = document.getElementById('countries');
+	var selectedCountryID = selectedCountry.value;	
+	
+	var tzs = countriesAndTimezones.getTimezonesForCountry(selectedCountryID);
+	
+	var div = document.getElementById('dropdownsTZs');
+	
+	var htmlDyn = '';
+
+	htmlDyn = '<select id="timezones">';
+	
+	for(var prop in tzs){
+		console.log(tzs[prop].name);
+		htmlDyn += '<option value="' + tzs[prop].name + '">' + tzs[prop].name + '</option>';
+	}
+	
+	htmlDyn += '</select>';
+	
+	div.innerHTML = htmlDyn;
+	
+}
   
   
   
